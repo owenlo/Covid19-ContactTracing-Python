@@ -16,9 +16,11 @@ if __name__ == "__main__":
   trace_key = key_schedule.trace_key() # Begin contact tracing and generate a Trace Key
   daily_trace_key = key_schedule.daily_trace(1, trace_key) # Generate a rolling 24-hour Daily Tracing Key
 
+
   print("**********")
-  print("Trace Key: " + binascii.hexlify(trace_key).decode())
+  print("Trace Key: " + binascii.hexlify(trace_key).decode())    
   print("Daily Trace Key: " + binascii.hexlify(daily_trace_key).decode())
+  print("Day Number: " + str(dayNumber))
   print("**********")
 
   for timeInterval in range(0, 144): #each interval is equal to 10 minutes of time.
