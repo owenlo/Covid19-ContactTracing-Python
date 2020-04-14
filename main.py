@@ -7,6 +7,7 @@
 
 import key_schedule
 import binascii
+import person
 
 def generateProxIds(daily_trace_key):
   """Generate all prox IDs for a 24 hour period based on Daily Trace Key"""
@@ -17,9 +18,9 @@ def generateProxIds(daily_trace_key):
 
   return prox_ids
 
-if __name__ == "__main__":
+def simulate():
   """ Simulate the Rolling Prox ID for a 24-hour window of Day Number 1. """
-
+  
   dayNumber = 1
 
   trace_key = key_schedule.trace_key() # Begin contact tracing and generate a Trace Key
@@ -34,3 +35,20 @@ if __name__ == "__main__":
   for i, prox_id in enumerate(generateProxIds(daily_trace_key)):
     print("Time Interval: " + str(i) + "; Prox ID: " + binascii.hexlify(prox_id).decode())
 
+if __name__ == "__main__":
+  simulate()
+
+"""
+def simulate2(): #Proof of concept, not fully implemented yet.
+  dayNumber = 1
+
+  bob = person.Person("Bob")
+  alice = person.Person("Alice")
+
+  bob.setDailyTraceKey(dayNumber)
+  alice.setDailyTraceKey(dayNumber)  
+
+  for timeInterval in range(0, 144): #each interval is equal to 10 minutes of time.
+    bob.generateProxID(timeInterval)
+    alice.generateProxID(timeInterval)
+"""
