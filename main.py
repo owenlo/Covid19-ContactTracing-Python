@@ -9,14 +9,18 @@ import key_schedule
 import binascii
 
 if __name__ == "__main__":
-  """ Simulate the Rolling Prox ID for a 24-hour window of day number 1. """
+  """ Simulate the Rolling Prox ID for a 24-hour window of Day Number 1. """
 
   dayNumber = 1
 
+  trace_key = key_schedule.trace_key() # Begin contact tracing and generate a Trace Key
+  daily_trace_key = key_schedule.daily_trace(1, trace_key) # Generate a rolling 24-hour Daily Tracing Key
+
+  print("**********")
+  print("Trace Key: " + binascii.hexlify(trace_key).decode())
+  print("Daily Trace Key: " + binascii.hexlify(daily_trace_key).decode())
+  print("**********")
+
   for timeInterval in range(0, 144): #each interval is equal to 10 minutes of time.
-
-    trace_key = key_schedule.trace_key() # "Enable" contact tracing and generate a Trace Key
-    daily_trace_key = key_schedule.daily_trace(1, trace_key) # Generate a rolling 24-hour Daily Tracing Key
-    prox_id = key_schedule.rolling_prox_id(daily_trace_key, timeInterval)
-
+    prox_id = key_schedule.rolling_prox_id(daily_trace_key, timeInterval)  
     print("Time Interval: " + str(timeInterval) + "; Prox ID: " + binascii.hexlify(prox_id).decode())
