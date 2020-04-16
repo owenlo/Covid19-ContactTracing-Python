@@ -35,20 +35,41 @@ def simulate():
   for i, prox_id in enumerate(generateProxIds(daily_trace_key)):
     print("Time Interval: " + str(i) + "; Prox ID: " + binascii.hexlify(prox_id).decode())
 
-if __name__ == "__main__":
-  simulate()
+def simulate2():
+  dayNumber = 1 #We only simulate 1 day in this scenario
 
-"""
-def simulate2(): #Proof of concept, not fully implemented yet.
-  dayNumber = 1
-
+  # Create actors Bob and Alice. In this scenario, we assume Alice is infected with Covid-19.
   bob = person.Person("Bob")
   alice = person.Person("Alice")
 
+  # Both Bob and Alice set their daily trace keys for a specified day.
+  # The proximity IDs for their 24-hour of daily activity is automatially set 
+  # when this function is called.
   bob.setDailyTraceKey(dayNumber)
-  alice.setDailyTraceKey(dayNumber)  
+  alice.setDailyTraceKey(dayNumber)
 
-  for timeInterval in range(0, 144): #each interval is equal to 10 minutes of time.
-    bob.generateProxID(timeInterval)
-    alice.generateProxID(timeInterval)
-"""
+  # Uncomment below functions to print all keys produced by Alice and Bob in this simulation
+  #bob.printResults()  
+  #alice.printResults() 
+
+  # We simulate Alice coming into contact with Bob at time interval 5 to 7 on Day Number 1
+  # Both Alice and Bob store each others respective prox IDs observed during these time intervals.
+  alice.setContact(bob.prox_ids[5])
+  bob.setContact(alice.prox_ids[5])
+  alice.setContact(bob.prox_ids[6])
+  bob.setContact(alice.prox_ids[6])
+  alice.setContact(bob.prox_ids[7])
+  bob.setContact(alice.prox_ids[7])
+
+  # Alice is tested positive for Covid-19 and releases her diagnosis keys to Bob.
+  aliceDiagnosisKeys = alice.getDiagnosisKeys()
+
+  #Bob performs contact tracing to determine when he came into contact with Alice.
+  bobContactTracingResult = bob.doContactTracing(aliceDiagnosisKeys)
+
+  for t in bobContactTracingResult:
+    print("Bob came into contact with a Covid-19 infected individual (Day Number: %d; Time Interval: %d; Prox ID: %s" % (t[0], t[1], binascii.hexlify(t[2]).decode()))    
+
+if __name__ == "__main__":
+  #simulate()
+  simulate2()
