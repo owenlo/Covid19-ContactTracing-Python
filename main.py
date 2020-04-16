@@ -49,26 +49,25 @@ def simulate2():
   alice.setDailyTraceKey(dayNumber)
 
   # Uncomment below functions to print all keys produced by Alice and Bob in this simulation
-  #bob.printResults()  
-  #alice.printResults() 
+  bob.printResults()  
+  alice.printResults() 
 
   # We simulate Alice coming into contact with Bob at time interval 5 to 7 on Day Number 1
   # Both Alice and Bob store each others respective prox IDs observed during these time intervals.
-  alice.setContact(bob.prox_ids[5])
-  bob.setContact(alice.prox_ids[5])
-  alice.setContact(bob.prox_ids[6])
-  bob.setContact(alice.prox_ids[6])
-  alice.setContact(bob.prox_ids[7])
-  bob.setContact(alice.prox_ids[7])
 
-  # Alice is tested positive for Covid-19 and releases her diagnosis keys to Bob.
+  for i in range(5, 8):
+    alice.setContact(bob.prox_ids[i])
+    bob.setContact(alice.prox_ids[i])
+    print("Simulation of contact between Bob and Alice has occurred (Day Number: %d; Time Interval: %d;)" % (dayNumber, i))
+
+  print("\nAlice is tested positive for Covid-19 and her diagnosis keys are released to Bob via a third party.")
   aliceDiagnosisKeys = alice.getDiagnosisKeys()
 
-  #Bob performs contact tracing to determine when he came into contact with Alice.
-  bobContactTracingResult = bob.doContactTracing(aliceDiagnosisKeys)
+  print("\nBob performs contact tracing to determine when he came into contact with Alice. His results show:")
+  bobContactTracingResult = bob.doContactTracing(aliceDiagnosisKeys)  
 
   for t in bobContactTracingResult:
-    print("Bob came into contact with a Covid-19 infected individual (Day Number: %d; Time Interval: %d; Prox ID: %s" % (t[0], t[1], binascii.hexlify(t[2]).decode()))    
+    print("Bob came into contact with a Covid-19 infected individual (Day Number: %d; Time Interval: %d; Matching Prox ID: %s" % (t[0], t[1], binascii.hexlify(t[2]).decode()))    
 
 if __name__ == "__main__":
   #simulate()
