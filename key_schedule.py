@@ -1,4 +1,5 @@
 import os
+import secrets
 
 from cryptography.hazmat.primitives import hashes, hmac
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
@@ -6,7 +7,8 @@ from cryptography.hazmat.backends import default_backend
 
 def trace_key():
   """The Tracing Key is generated when contact tracing is enabled on the device and is securely stored on the device."""
-  tk = os.urandom(32) #Generate a 32-byte tracing key.
+  #tk = os.urandom(32) #Generate a 32-byte tracing key.
+  tk = secrets.token_bytes(32) #Generate a 32-byte tracing key.
   return tk
 
 def daily_trace(dayNumber, traceKey):
