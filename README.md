@@ -1,5 +1,7 @@
 # Covid19-ContactTracing-Python
 
+UPDATE: Please note that with the release of v1.1 of the Crypto Specifications (https://covid19-static.cdn-apple.com/applications/covid19/current/static/contact-tracing/pdf/ExposureNotification-CryptographySpecificationv1.1.pdf) this implementation is now outdated. AES has replaced the HMAC function in v1.1. 
+
 An example implementation of the Covid-19 Contact Tracing concept proposed by Apple/Google.
 
 A demo of the code is available at  [https://repl.it/@owenlo/Covid19-ContactTracing-Simulation](https://repl.it/@owenlo/Covid19-ContactTracing-Simulation)
